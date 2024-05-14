@@ -20,6 +20,9 @@ xv6 with C++ (plus plus) is xv7. Did you get it? Haha...
 - [ ] Implement xv7
 - [ ] Convert build system to CMake
 - [ ] Benchmark xv6 vs xv7 using LMBench
+Stretch goals
+- [ ] Write a network stack
+- [ ] Re-implement xv7 base on ARM architecture
 
 ### What I expect to learn from this project
 * How an OS works?
@@ -36,10 +39,6 @@ xv6 with C++ (plus plus) is xv7. Did you get it? Haha...
 * make and CMake
 * GCC and GDB
 * How to benchmark an OS
-
-Stretch goals
-- [ ] Write a network stack
-- [ ] Re-implement xv7 base on ARM architecture
 
 ### Resources I would be using
 * [Operating Systems: Three Easy Pieces](https://pages.cs.wisc.edu/~remzi/OSTEP/)
