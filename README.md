@@ -20,7 +20,7 @@ xv6 with C++ (plus plus) is xv7. Did you get it? Haha...
 - [ ] Implement xv7
 - [ ] Convert build system to CMake
 - [ ] Benchmark xv6 vs xv7 using LMBench
-Stretch goals
+#### Stretch goals
 - [ ] Write a network stack
 - [ ] Re-implement xv7 base on ARM architecture
 
