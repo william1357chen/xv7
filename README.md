@@ -3,7 +3,7 @@
 ## Project Overview
 This is a UNIX kernel programming passion project. The hope is to gain hands on system programming experience by re-creating a lightweight OS called xv6.
 Obviously, I want to add my own twist and make my life harder, which is why I want to re-implement xv6 in C++. This will help me understand whether an
-object-oriented language like C++ makes sense in terms of buliding an OS. This might sound stupid, but projects are meant to be fun and stupid, especially my projects! Below is the roadmap and what I would gain throughout the development of this project.
+object-oriented language like C++ makes sense in terms of building an OS. This might sound stupid, but projects are meant to be fun and stupid, especially my projects! Below is the roadmap and what I would gain throughout the development of this project.
 
 ### What is xv6?
 [xv6](https://github.com/mit-pdos/xv6-public) is a re-implementation of Dennis Ritchie's and Ken Thompson's Unix Version 6 (v6). xv6 loosely follows the structure and style of v6, but is implemented for a modern x86-based multiprocessor using ANSI C.
@@ -20,6 +20,7 @@ xv6 with C++ (plus plus) is xv7. Did you get it? Haha...
 - [ ] Implement xv7
 - [ ] Convert build system to CMake
 - [ ] Benchmark xv6 vs xv7 using LMBench
+
 #### Stretch goals
 - [ ] Write a network stack
 - [ ] Re-implement xv7 base on ARM architecture
@@ -45,6 +46,7 @@ xv6 with C++ (plus plus) is xv7. Did you get it? Haha...
 * [xv6 manual](https://pdos.csail.mit.edu/6.828/2018/xv6/book-rev11.pdf)
 * [xv6 source code](https://github.com/mit-pdos/xv6-public)
 * [Operating Systems: Three Easy Pieces Projects](https://github.com/remzi-arpacidusseau/ostep-projects/)
+* [LMBench paper](https://lmbench.sourceforge.net/lmbench-usenix.pdf)
 
 ### Acknowledgements
 
