@@ -77,6 +77,7 @@ LD = $(TOOLPREFIX)ld
 OBJCOPY = $(TOOLPREFIX)objcopy
 OBJDUMP = $(TOOLPREFIX)objdump
 CFLAGS = -fno-pic -static -fno-builtin -fno-strict-aliasing -O2 -Wall -MD -ggdb -m32 -Werror -fno-omit-frame-pointer
+CFLAGS += -I.
 CFLAGS += $(shell $(CC) -fno-stack-protector -E -x c /dev/null >/dev/null 2>&1 && echo -fno-stack-protector)
 ASFLAGS = -m32 -gdwarf-2 -Wa,-divide
 # FreeBSD ld wants ``elf_i386_fbsd''
@@ -114,14 +115,14 @@ entryother: entryother.S
 	$(OBJCOPY) -S -O binary -j .text bootblockother.o entryother
 	$(OBJDUMP) -S bootblockother.o > entryother.asm
 
-initcode: initcode.S
-	$(CC) $(CFLAGS) -nostdinc -I. -c initcode.S
-	$(LD) $(LDFLAGS) -N -e start -Ttext 0 -o initcode.out initcode.o
-	$(OBJCOPY) -S -O binary initcode.out initcode
-	$(OBJDUMP) -S initcode.o > initcode.asm
+$U/initcode: $U/initcode.S
+	$(CC) $(CFLAGS) -nostdinc -c $U/initcode.S -o $U/initcode.o
+	$(LD) $(LDFLAGS) -N -e start -Ttext 0 -o $U/initcode.out $U/initcode.o
+	$(OBJCOPY) -S -O binary $U/initcode.out $U/initcode
+	$(OBJDUMP) -S $U/initcode.o > $U/initcode.asm
 
-kernel: $(OBJS) entry.o entryother initcode kernel.ld
-	$(LD) $(LDFLAGS) -T kernel.ld -o kernel entry.o $(OBJS) -b binary initcode entryother
+kernel: $(OBJS) entry.o entryother $U/initcode kernel.ld
+	$(LD) $(LDFLAGS) -T kernel.ld -o kernel entry.o $(OBJS) -b binary $U/initcode entryother
 	$(OBJDUMP) -S kernel > kernel.asm
 	$(OBJDUMP) -t kernel | sed '1,/SYMBOL TABLE/d; s/ .* / /; /^$$/d' > kernel.sym
 
@@ -132,8 +133,8 @@ kernel: $(OBJS) entry.o entryother initcode kernel.ld
 # great for testing the kernel on real hardware without
 # needing a scratch disk.
 MEMFSOBJS = $(filter-out ide.o,$(OBJS)) memide.o
-kernelmemfs: $(MEMFSOBJS) entry.o entryother initcode kernel.ld fs.img
-	$(LD) $(LDFLAGS) -T kernel.ld -o kernelmemfs entry.o  $(MEMFSOBJS) -b binary initcode entryother fs.img
+kernelmemfs: $(MEMFSOBJS) entry.o entryother $U/initcode kernel.ld fs.img
+	$(LD) $(LDFLAGS) -T kernel.ld -o kernelmemfs entry.o  $(MEMFSOBJS) -b binary $U/initcode entryother fs.img
 	$(OBJDUMP) -S kernelmemfs > kernelmemfs.asm
 	$(OBJDUMP) -t kernelmemfs | sed '1,/SYMBOL TABLE/d; s/ .* / /; /^$$/d' > kernelmemfs.sym
 
@@ -187,8 +188,9 @@ fs.img: mkfs README.md $(UPROGS)
 .PHONY: clean
 clean: 
 	rm -f *.tex *.dvi *.idx *.aux *.log *.ind *.ilg \
+	*/*.o */*.d */*.asm */*.sym \
 	*.o *.d *.asm *.sym vectors.S bootblock entryother \
-	initcode initcode.out kernel xv7.img fs.img kernelmemfs \
+	$U/initcode $U/initcode.out kernel xv7.img fs.img kernelmemfs \
 	xv7memfs.img mkfs .gdbinit \
 	$(UPROGS)
 
