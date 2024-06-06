@@ -63,16 +63,16 @@ pde_t entrypgdir[];  // For entry.S
 static void
 startothers(void)
 {
-  extern uchar _binary_entryother_start[], _binary_entryother_size[];
+  extern uchar _binary_user_entryother_start[], _binary_user_entryother_size[];
   uchar *code;
   struct cpu *c;
   char *stack;
 
   // Write entry code to unused memory at 0x7000.
-  // The linker has placed the image of entryother.S in
-  // _binary_entryother_start.
+  // The linker has placed the image of user/entryother.S in
+  // _binary_user_entryother_start.
   code = P2V(0x7000);
-  memmove(code, _binary_entryother_start, (uint)_binary_entryother_size);
+  memmove(code, _binary_user_entryother_start, (uint)_binary_user_entryother_size);
 
   for(c = cpus; c < cpus+ncpu; c++){
     if(c == mycpu())  // We've started already.
